@@ -1,0 +1,62 @@
+#lang racket
+;;Warning - your program won't stop quickly since you need to improve its
+;;          efficiency in Part 2. You can comment the last line out temporarily.
+
+;;Part A - Calculate the frequencies of user input strings.
+
+;Prompt the user to type ten strings and store them in a list
+(define inputStrings 
+  (letrec ([strs '()]
+           [readStrings (lambda (n)
+                          ;use (read-line (current-input-port)) to read a string
+                          ;implement the logic to read n strings here
+                          strs ;replace this with your code
+                          )])
+    (readStrings 10)))
+
+(define (lengthFreq lst)
+  (letrec ([f (lambda (acc lst)
+                ;implement the logic to collect the frequency of strings based upon their length
+                ;you can use string-length procedure to get a string's length
+                acc ;replace this with your code
+                )])
+    (f '() lst))
+  )
+
+;output interpretation:
+;assume you get this output from the following procedure call
+;          '((9 . 1) (3 . 5) (2 . 2) (4 . 2))
+;(9 . 1) means there is one string with a length of 9
+(lengthFreq inputStrings)
+
+
+;;Part B - Use memoization to speed up the following code.
+;;         Sample code demonstrated in class is given to you.
+
+;def A(n):
+;        if n < 3:
+;                return 1
+;        else:
+;                return B(n-1) + B(n-2)
+
+;Two dictionaries, one for A and one for B, given for you to start with.
+;They have to global here so both A and B can access them
+(define memoA null)
+(define memoB null)
+
+(define (A n)
+  (if (< n 3)
+      1
+      (+ (B (sub1 n)) (B (- n 2))))
+  )
+
+(define (B n)
+  (if (< n 3)
+      2
+      (+ (A (sub1 n)) (A (- n 2))))
+  )
+
+;Try calling B with 10.
+(B 10)
+;Then try 1000
+(B 1000)
